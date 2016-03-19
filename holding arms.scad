@@ -35,7 +35,6 @@ for(x=[-1:+2:+1])
           // lug Between Screen And Platform
           translate([-(lugW-1)/2, -((lugH+1)/2+lugT), -lugT/2])
           {
-            //cube(size=[(lugW-1),lugT,lugScreenPlatformL],center=false);
             polyhedron(points=[
               [0,0,0],[lugW-1,0,0],
               [0,lugT,0],[lugW-1,lugT,0],
@@ -43,11 +42,24 @@ for(x=[-1:+2:+1])
               [0-lubEnlarg,lugT,lugScreenPlatformL],[lugW-1+lubEnlarg,lugT,lugScreenPlatformL]
             ],faces=[
               [0,1,3,2],
-              [4,5,7,6],
-              [0,1,5,4],
+              [4,6,7,5],
+              [1,0,4,5],
               [2,3,7,6],
-              [1,3,7,5],
+              [3,1,5,7],
               [0,2,6,4]
+            ]);
+            
+            polyhedron(points=[
+              [(lugW-1)/2-lugT,lugT,lugT+10],[(lugW-1)/2+lugT,lugT,lugT+10],
+              [(lugW-1)/2-lugT,lugT+lugT,lugT+10],[(lugW-1)/2+lugT,lugT+lugT,lugT+10],
+              [(lugW-1)/2-lugT,lugT+lugT+lubEnlarg,lugScreenPlatformL],[(lugW-1)/2+lugT,lugT+lugT+lubEnlarg,lugScreenPlatformL],
+              [(lugW-1)/2-lugT,lugT,lugScreenPlatformL],[(lugW-1)/2+lugT,lugT,lugScreenPlatformL],
+            ],faces=[
+              [1,0,2,3],
+              [3,2,4,5],
+              [5,4,6,7],
+              [1,3,5,7],
+              [6,4,2,0]
             ]);
           }
         }
