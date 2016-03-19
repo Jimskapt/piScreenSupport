@@ -42,6 +42,12 @@ for(x=[-1:+2:+1])
               [0-lubEnlarg,0,lugScreenPlatformL],[lugW-1+lubEnlarg,0,lugScreenPlatformL],
               [0-lubEnlarg,lugT,lugScreenPlatformL],[lugW-1+lubEnlarg,lugT,lugScreenPlatformL]
             ],faces=[
+              [0,1,3,2],
+              [4,5,7,6],
+              [0,1,5,4],
+              [2,3,7,6],
+              [1,3,7,5],
+              [0,2,6,4]
             ]);
           }
         }
