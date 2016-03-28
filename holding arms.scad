@@ -53,11 +53,11 @@ for(x=[-1:+2:+1])
             [(lugW-1)/2-lugT/2,lugT+lugT+lugEnlarg,lugScreenPlatformL],[(lugW-1)/2+lugT,lugT+lugT+lugEnlarg,lugScreenPlatformL],
             [(lugW-1)/2-lugT/2,lugT,lugScreenPlatformL],[(lugW-1)/2+lugT,lugT,lugScreenPlatformL],
           ],faces=[
-            [1,0,2,3],
-            [3,2,4,5],
-            [5,4,6,7],
-            [1,3,5,7],
-            [6,4,2,0]
+            [0,1,3,2],
+            [2,3,5,4],
+            [4,5,7,6],
+            [3,1,7,5],
+            [4,6,0,2]
           ]);
         }
         
@@ -96,16 +96,16 @@ for(x=[-1:+2:+1])
             [3,0,4,7]
           ]);
           
-          for(x=[-1:+2:+1])
+          for(i=[-1:+2:+1])
           {
-            translate([x*(40/2-5),0,0])
+            translate([i*(40/2-5),0,0])
               cylinder(d=3,h=8+2,center=true);
           }
         }
       }
       
-      // horizontal lugs
-      polyhedron(points=[
+      // horizontal lugs & ribs
+      coordsLugs=[
         [x*(40/2-2*lugEnlarg),  10+y*(15/2-0),  0],
         [x*(40/2-0),  10+y*(15/2-2*lugEnlarg),  0],
         [x*(lugCenterGapX-lugEnlarg),  y*(lugCenterGapY-0)-(lugH+1)/2,  0],
@@ -114,15 +114,8 @@ for(x=[-1:+2:+1])
         [x*(40/2-0),  10+y*(15/2-2*lugEnlarg),  +lugT],
         [x*(lugCenterGapX-lugEnlarg),  y*(lugCenterGapY-0)-(lugH+1)/2,  +lugT],
         [x*(lugCenterGapX-0),  y*(lugCenterGapY-lugEnlarg)-(lugH+1)/2,  +lugT]
-      ],faces=[
-        [1,0,2,3],
-        [4,5,7,6],
-        [7,5,1,3],
-        [2,0,4,6]
-      ]);
-      
-      // vertical ribs
-      polyhedron(points=[
+      ];
+      coordsRibs=[
         [x*(40/2-lugT),  10+y*(15/2-0),  0-3*(8-lugT)/4],
         [x*(40/2-0),  10+y*(15/2-lugT),  0-3*(8-lugT)/4],
         [x*(lugCenterGapX-lugT),  y*(lugCenterGapY-0)-(lugH+1)/2,  0-lugT],
@@ -131,21 +124,42 @@ for(x=[-1:+2:+1])
         [x*(40/2-0),  10+y*(15/2-lugT),  +lugT-lugT],
         [x*(lugCenterGapX-lugT),  y*(lugCenterGapY-0)-(lugH+1)/2,  +lugT-lugT],
         [x*(lugCenterGapX-0),  y*(lugCenterGapY-lugT)-(lugH+1)/2,  +lugT-lugT]
-      ],faces=[
-        [1,0,2,3],
-        [4,5,7,6],
-        [7,5,1,3],
-        [2,0,4,6]
-      ]);
+      ];
+      
+      if(x==y)
+      {
+        polyhedron(points=coordsLugs,faces=[
+          [0,1,3,2],
+          [5,4,6,7],
+          [5,7,3,1],
+          [0,2,6,4],
+          [1,0,4,5],
+          [2,3,7,6]
+        ]);
+        polyhedron(points=coordsRibs,faces=[
+          [0,1,3,2],
+          [5,4,6,7],
+          [5,7,3,1],
+          [0,2,6,4]
+        ]);
+      }
+      else
+      {
+        polyhedron(points=coordsLugs,faces=[
+          [1,0,2,3],
+          [4,5,7,6],
+          [7,5,1,3],
+          [2,0,4,6],
+          [0,1,5,4],
+          [3,2,6,7]
+        ]);
+        polyhedron(points=coordsRibs,faces=[
+          [1,0,2,3],
+          [4,5,7,6],
+          [7,5,1,3],
+          [2,0,4,6]
+        ]);
+      }
     }
   }
 }
-
-/*/ platform
-
-translate([0,0,lugScreenPlatformL])
-{
-  cube(size=[170,100,1],center=true);
-}
-
-//*/
